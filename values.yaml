@@ -1,0 +1,8 @@
+global:
+  debug: false
+
+nginx:
+  enabled: true
+
+traefik:
+  enabled: true
