@@ -6,3 +6,6 @@ nginx:
 
 traefik:
   enabled: true
+
+adminer:
+  enabled: true

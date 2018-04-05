@@ -13,8 +13,10 @@ You can create a new environment using Google Cloud or, if you are familiar with
 
 ### Quickstart
 
+#### Managing core environments
+
 * Start a bash shell with all required dependencies and budgetkey-k8s code
-  * `docker run -it --entrypoint bash -e OPS_REPO_SLUG=OriHoch/budgetkey-k8s orihoch/sk8s-ops`
+  * `docker run -it --entrypoint bash -e OPS_REPO_SLUG=OpenBudget/budgetkey-k8s orihoch/sk8s-ops`
 * Authenticate with Google Cloud Platform
   * `gcloud auth login`
 * Switch to an environment
@@ -23,6 +25,30 @@ You can create a new environment using Google Cloud or, if you are familiar with
   * `kubectl get pods`
 * Use `helm` to manage releases
   * `helm ls`
+
+#### Using Minikube for local infrastructure development
+
+* Install Minikube according to the instructions in latest [release notes](https://github.com/kubernetes/minikube/releases)
+* Create the local minikube cluster
+  * `minikube start`
+* Verify you are connected to the cluster
+  * `kubectl get nodes`
+* Install [helm client](https://docs.helm.sh/using_helm/#installing-the-helm-client)
+* Initialize helm
+  * `helm init --history-max 1 --upgrade --wait`
+* Verify helm version on both client and server
+  * `helm version`
+  * should be v1.8.2 or later
+* Clone the budgetkey-k8s repo
+  * `git clone https://github.com/OpenBudget/budgetkey-k8s.git`
+* Change to the budgetkey-k8s directory
+  * `cd budgetkey-k8s`
+* Switch to the minikube environment
+  * `source switch_environment.sh minikube`
+* Deploy the root chart
+  * `./helm_upgrade.sh --install`
+* Deploy additional charts
+  * `./helm_upgrade_external_chart.sh socialmap-app-main-page --install`
 
 ## Documentation
 
