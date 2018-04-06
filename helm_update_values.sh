@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source connect.sh
+[ -e connect.sh ] && source connect.sh
+! [ -e ./update_yaml.py ] && echo missing update_yaml.py && exit 1
 
 if [ "${1}" == "" ]; then
     echo "Usage: ./helm_update_values.sh <YAML_OVERRIDE_VALUES_JSON> [GIT_COMMIT_MESSAGE] [GIT_REPO_TOKEN] [GIT_REPO_SLUG] [GIT_REPO_BRANCH]"
