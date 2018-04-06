@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-[ -e connect.sh ] && source connect.sh
-! [ -e ./update_yaml.py ] && echo missing update_yaml.py && exit 1
-
 if [ "${1}" == "" ]; then
-    echo "Usage: ./helm_update_values.sh <YAML_OVERRIDE_VALUES_JSON> [GIT_COMMIT_MESSAGE] [GIT_REPO_TOKEN] [GIT_REPO_SLUG] [GIT_REPO_BRANCH]"
+    echo "Usage: ./helm_update_values.sh <YAML_OVERRIDE_VALUES_JSON> [GIT_COMMIT_MESSAGE] [GIT_REPO_TOKEN] [GIT_REPO_SLUG] [GIT_REPO_BRANCH] [ENVIRONMENT_NAME]"
 fi
 
 YAML_OVERRIDE_VALUES_JSON="${1}"
@@ -12,6 +9,13 @@ GIT_COMMIT_MESSAGE="${2}"
 GIT_REPO_TOKEN="${3}"
 GIT_REPO_SLUG="${4}"
 GIT_REPO_BRANCH="${5:-master}"
+ENVIRONMENT_NAME="${6}"
+
+if [ "${ENVIRONMENT_NAME}" == "" ]; then
+    source connect.sh
+else
+    export K8S_ENVIRONMENT_NAME="${ENVIRONMENT_NAME}"
+fi
 
 if [ "${YAML_OVERRIDE_VALUES_JSON:0:1}" != '{' ]; then
     ! YAML_OVERRIDE_VALUES_JSON=`echo "${YAML_OVERRIDE_VALUES_JSON}" | base64 -d` \
@@ -27,15 +31,11 @@ echo "Updating values for ${K8S_ENVIRONMENT_NAME} environment: ${YAML_OVERRIDE_V
 
 if [ "${GIT_COMMIT_MESSAGE}" != "" ] && [ "${GIT_REPO_TOKEN}" != "" ] && [ "${GIT_REPO_SLUG}" != "" ]; then
     echo "Committing and pushing to Git"
-    TEMPDIR=`mktemp -d`
 
     ! (
         git config user.email "deployment-bot@${K8S_ENVIRONMENT_NAME}" &&
         git config user.name "${K8S_ENVIRONMENT_NAME}-deployment-bot"
     ) && echo "failed to git config" && exit 1
-
-    ! git clone --depth 1 --branch "${GIT_REPO_BRANCH}" "https://github.com/${GIT_REPO_SLUG}.git" "${TEMPDIR}" \
-      && echo "failed git clone" && exit 1
 
     if ! git diff --shortstat --exit-code "environments/${K8S_ENVIRONMENT_NAME}/values.auto-updated.yaml"; then
         echo "Committing and pushing changes in environments/${K8S_ENVIRONMENT_NAME}/values.auto-updated.yaml"
@@ -47,7 +47,6 @@ if [ "${GIT_COMMIT_MESSAGE}" != "" ] && [ "${GIT_REPO_TOKEN}" != "" ] && [ "${GI
     else
         echo "No changes, skipping commit / push"
     fi
-    rm -rf "${TEMPDIR}"
 fi
 
 echo "Great Success!"
