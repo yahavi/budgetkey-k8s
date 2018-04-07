@@ -50,6 +50,16 @@ You can create a new environment using Google Cloud or, if you are familiar with
 * Deploy additional charts
   * `./helm_upgrade_external_chart.sh socialmap --install`
 
+## Common Tasks
+
+### Adding an external app to the environment
+
+* Duplicate and modify an existing chart under `charts-external` directory
+* Setup the external app's continuous deployment
+  * Copy the relevant steps from an existing app's [.travis.yml](https://github.com/OriHoch/socialmap-app-main-page/blob/master/.travis.yml)
+  * Also, suggested to keep deployment notes in the app's [README.md](https://github.com/OriHoch/socialmap-app-main-page/blob/master/README.md#deployment)
+  * Follow the app's README to setup Docker and GitHub credentials on Travis
+
 ## Documentation
 
 ### Environments
