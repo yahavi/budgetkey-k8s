@@ -1,0 +1,30 @@
+{{ if .Values.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: socialmap-main-page
+spec:
+  ports:
+  - name: '8000'
+    port: 8000
+  selector:
+    app: socialmap-main-page
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: socialmap-main-page
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: socialmap-main-page
+    spec:
+      containers:
+      - name: socialmap
+        image: {{ .Values.mainpageImage | quote }}
+        ports:
+        - containerPort: 8000
+        resources: {{ .Values.mainpageResources }}
+{{ end }}

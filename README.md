@@ -48,7 +48,7 @@ You can create a new environment using Google Cloud or, if you are familiar with
 * Deploy the root chart
   * `./helm_upgrade.sh --install`
 * Deploy additional charts
-  * `./helm_upgrade_external_chart.sh socialmap-app-main-page --install`
+  * `./helm_upgrade_external_chart.sh socialmap --install`
 
 ## Documentation
 

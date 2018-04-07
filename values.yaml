@@ -9,3 +9,8 @@ traefik:
 
 adminer:
   enabled: true
+
+socialmap:
+  enabled: true
+  mainpageResources: >
+    {"requests": {"cpu": "50m", "memory": "100Mi"}, "limits": {"cpu": "100m", "memory": "200Mi"}}
