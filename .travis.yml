@@ -2,9 +2,9 @@ language: bash
 sudo: required
 env:
   matrix:
-  - DEPLOY_ENVIRONMENT=ori-gke DEPLOY_BRANCH=master
+  # - DEPLOY_ENVIRONMENT=production DEPLOY_BRANCH=master
   # - DEPLOY_ENVIRONMENT=production DEPLOY_TAGS=true
-  # - DEPLOY_ENVIRONMENT=ori DEPLOY_BRANCH=midburn-profiles-aka-drupal-infra
+  # - DEPLOY_ENVIRONMENT=ori-gke DEPLOY_BRANCH=master
 services:
 - docker
 script:
