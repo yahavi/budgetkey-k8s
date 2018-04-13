@@ -46,10 +46,12 @@ spec:
             "path": "{{ .Values.global.persistentDataVolume.basePath }}/datapackages",
             "type": "DirectoryOrCreate"
           {{ end }}
+        }
       - name: fonts
         {{ .Values.global.persistentDataVolume.type }}: {
           {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
             "path": "{{ .Values.global.persistentDataVolume.basePath }}/fonts",
             "type": "DirectoryOrCreate"
           {{ end }}
+        }
 {{ end }}

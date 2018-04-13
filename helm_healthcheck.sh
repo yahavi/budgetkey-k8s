@@ -21,12 +21,33 @@ openprocure_healthcheck() {
 themes_healthcheck() {
     ! [ "`./read_env_yaml.sh themes enabled`" == "true" ] \
         && echo "themes chart is disabled, skipping healthcheck" && return 0
-    [ "$(kubectl get job openprocure-theme -o json | jq -r .status.succeeded)" == "1" ] &&\
-     echo themes: OK
+    kubectl rollout status daemonset themes
+}
+
+nginx_healthcheck() {
+    ! [ "`./read_env_yaml.sh nginx enabled`" == "true" ] \
+        && echo "nginx chart is disabled, skipping healthcheck" && return 0
+    kubectl rollout status deployment/nginx
+}
+
+postgres_healthcheck() {
+    ! [ "`./read_env_yaml.sh postgres enabled`" == "true" ] \
+        && echo "postgres chart is disabled, skipping healthcheck" && return 0
+    kubectl rollout status deployment/postgres
+}
+
+elasticsearch_healthcheck() {
+    ! [ "`./read_env_yaml.sh elasticsearch enabled`" == "true" ] \
+        && echo "elasticsearch chart is disabled, skipping healthcheck" && return 0
+    kubectl rollout status deployment/elasticsearch
 }
 
 ! socialmap_healthcheck && echo failed socialmap healthcheck && RES=1;
 ! themes_healthcheck && echo failed themes healthcheck && RES=1;
+! openprocure_healthcheck && echo failed openprocure healthcheck && RES=1;
+! nginx_healthcheck && echo failed nginx healthcheck && RES=1;
+! postgres_healthcheck && echo failed postgres healthcheck && RES=1;
+! elasticsearch_healthcheck && echo failed elasticsearch healthcheck && RES=1;
 
 [ "${RES}" == "0" ] && echo Great Success!
 
