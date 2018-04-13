@@ -1,5 +1,7 @@
 global:
   debug: false
+  persistentDataVolume:
+    type: emptyDir
 
 nginx:
   enabled: true
@@ -14,3 +16,16 @@ socialmap:
   enabled: true
   mainpageResources: >
     {"requests": {"cpu": "50m", "memory": "100Mi"}, "limits": {"cpu": "100m", "memory": "200Mi"}}
+
+openprocure:
+  enabled: true
+  mainpageResources: >
+    {"requests": {"cpu": "50m", "memory": "100Mi"}, "limits": {"cpu": "100m", "memory": "200Mi"}}
+
+nginx:
+  enabled: true
+  resourcs: >
+    {"requests": {"cpu": "50m", "memory": "100Mi"}, "limits": {"cpu": "100m", "memory": "200Mi"}}
+
+themes:
+  enabled: true

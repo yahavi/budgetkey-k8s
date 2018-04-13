@@ -1,2 +1,5 @@
 global:
-  enableRootChart: false
+  persistentDataVolume:
+    type: hostPath
+    basePath: /var/budgetkey-persistent-data
+    hostname: gke-knessetdata-pool-1-ed4cc0f3-3d9d

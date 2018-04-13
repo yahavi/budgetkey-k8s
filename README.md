@@ -64,16 +64,16 @@ kubectl create -f rbac-config.yaml
 helm init --service-account tiller --upgrade --force-upgrade --history-max 1
 ```
 
-Deploy the root chart which contains core infrastructure components
+Deploy all charts (if dry run succeeds)
 
 ```
-./helm_upgrade.sh --install --debug --dry-run && ./helm_upgrade.sh --install
+./helm_upgrade_all.sh --install --debug --dry-run && ./helm_upgrade_all.sh --install
 ```
 
-Deploy an external chart
+You can also upgrade a single chart
 
 ```
-./helm_upgrade_external_chart.sh socialmap --install --debug --dry-run && ./helm_upgrade_external_chart.sh socialmap --install --debug
+./helm_upgrade_external_chart.sh  socialmap
 ```
 
 The helm_upgrade scripts forward all arguments to the underlying `helm upgrade` command, some useful arguments:
