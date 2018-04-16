@@ -1,3 +1,5 @@
+appGenericItem:
+  image: yahav/budgetkey-app-generic-item:a36ea418136c3a1c4fd41c471438338c37db49c6
 nginx:
   image: orihoch/open-budget-nginx-frontend:cf062f1fda77d41b8d94003fc8d878346d56151a
 socialmap:
