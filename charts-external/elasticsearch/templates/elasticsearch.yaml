@@ -35,8 +35,6 @@ spec:
         env:
         - name: ES_JAVA_OPTS
           value: {{ .Values.ES_JAVA_OPTS | quote }}
-        - name: path.data
-          value: "/elasticsearch-persistent-data/"
         - name: xpack.security.enabled
           value: "false"
         volumeMounts:
