@@ -1,0 +1,28 @@
+{{ if and .Values.enabled .Values.createClusterRole }}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: db-backup
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods", "secrets"]
+  verbs: ["get", "watch", "list"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: db-backup
+subjects:
+- kind: ServiceAccount
+  name: db-backup
+  namespace: {{ .Values.global.namespace }}
+roleRef:
+  kind: ClusterRole
+  name: db-backup
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: db-backup
+{{ end }}
