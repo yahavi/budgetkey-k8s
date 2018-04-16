@@ -3,6 +3,7 @@ sudo: required
 env:
   matrix:
   - DEPLOY_ENVIRONMENT=budgetkey DEPLOY_BRANCH=master
+  - DEPLOY_ENVIRONMENT=budgetkey DEPLOY_BRANCH=budgetkey-environment
   # - DEPLOY_ENVIRONMENT=production DEPLOY_TAGS=true
   # - DEPLOY_ENVIRONMENT=ori-gke DEPLOY_BRANCH=master
 services:
