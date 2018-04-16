@@ -12,6 +12,9 @@ spec:
       labels:
         app: db-backup
     spec:
+      {{ if .Values.createClusterRole }}
+      serviceAccountName: db-backup
+      {{ end }}
       containers:
       - name: db-backup
         image: {{ .Values.image | default "orihoch/kubernetes-db-to-s3" | quote }}

@@ -1,0 +1,31 @@
+global:
+  namespace: budgetkey
+  persistentDataVolume:
+    type: hostPath
+    basePath: /var/budgetkey-persistent-data
+    hostname: gke-budgetkey-default-pool-bfb61637-qzv3
+
+postgres:
+  # gcloud --project=next-obudget-org compute disks create --size=100GB --zone=europe-west1-b budgetkey-postgres-data
+  gcePersistentDiskName: budgetkey-postgres-data
+  # kubectl create secret generic postgres --from-literal=POSTGRES_PASSWORD=
+  secretName: postgres
+
+# elasticsearch:
+  # gcloud --project=next-obudget-org compute disks create --size=100GB --zone=europe-west1-b budgetkey-postgres-data
+  # gcePersistentDiskName: budgetkey-elasticsearch-data
+
+db-backup:
+  createClusterRole: true
+  # kubectl create secret generic db-backup --from-literal=S3_BUCKET= \
+  #                                         --from-literal=S3_NAMESPACE= \
+  #                                         --from-literal=AWS_ACCESS_KEY= \
+  #                                         --from-literal=AWS_SECRET_KEY= \
+  #                                         --from-literal=S3_HOST= \
+  #                                         --from-literal=S3_HOST_BUCKET="
+  secretName: db-backup
+
+elasticsearch:
+  resources: >
+    {"requests": {"cpu": "1000m", "memory": "4Gi"}, "limits": {"cpu": "2500m", "memory": "6Gi"}}
+  ES_JAVA_OPTS: "-Xms3g -Xmx3g"

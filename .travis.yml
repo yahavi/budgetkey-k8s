@@ -2,7 +2,7 @@ language: bash
 sudo: required
 env:
   matrix:
-  # - DEPLOY_ENVIRONMENT=production DEPLOY_BRANCH=master
+  - DEPLOY_ENVIRONMENT=budgetkey DEPLOY_BRANCH=master
   # - DEPLOY_ENVIRONMENT=production DEPLOY_TAGS=true
   # - DEPLOY_ENVIRONMENT=ori-gke DEPLOY_BRANCH=master
 services:
@@ -15,9 +15,9 @@ script:
       ([ "${DEPLOY_TAGS}" == "true" ] && [ "${TRAVIS_TAG}" != "" ]) \
      )
   then
-      openssl aes-256-cbc -K $encrypted_93b308bc8a42_key -iv $encrypted_93b308bc8a42_iv -in ./environments/ori-gke/k8s-ops-secret.json.enc -out secret-k8s-ops.json -d
+      openssl aes-256-cbc -K $encrypted_93b308bc8a42_key -iv $encrypted_93b308bc8a42_iv -in environments/budgetkey/k8s-ops-secret.json.enc -out environments/budgetkey/secret-k8s-ops.json -d
       K8S_ENVIRONMENT_NAME="${DEPLOY_ENVIRONMENT}"
-      OPS_REPO_SLUG="OriHoch/budgetkey-k8s"
+      OPS_REPO_SLUG="OpenBudget/budgetkey-k8s"
       OPS_REPO_BRANCH="${DEPLOY_BRANCH}"
       wget https://raw.githubusercontent.com/OriHoch/sk8s-ops/master/run_docker_ops.sh
       chmod +x run_docker_ops.sh
