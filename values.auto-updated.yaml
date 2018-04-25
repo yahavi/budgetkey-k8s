@@ -1,5 +1,5 @@
 appGenericItem:
-  image: yahav/budgetkey-app-generic-item:a36ea418136c3a1c4fd41c471438338c37db49c6
+  image: yahavi/budgetkey-app-generic-item:b579742f22ea1b003cbad558d1f681c496d5488f
 dataPipelines:
   image: yahavi/budgetkey-data-pipelines:1e29c3a687022693d7995517bba648efbecf8f03
 nginx:
